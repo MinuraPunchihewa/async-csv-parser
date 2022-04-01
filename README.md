@@ -33,7 +33,7 @@ Run the application,
 docker-compose up
 ```
 
-Alternatively, combine the two commands above and run,
+Alternatively, combine the two commands given above and run,
 
 ```
 docker-compose build && docker-compose up
