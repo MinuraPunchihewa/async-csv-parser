@@ -3,7 +3,7 @@ This is a multi-container application that processes CSV files stored in Azure B
 
 To perform asynchronous operations, a Celery worker has been integrated with a Redis queue. Any requests that are sent to the Web service will be stored in the Redis queue. The Celery worker will poll this queue and fulfill the requests in order.
 
-This project can be easily converted to an application that processes other types of files, such as XML, Parquet etc., in an asynchronous manner or it can be used as blueprint for any other asynchronous API.
+This project can be easily converted to an application that processes other types of files, such as XML, Parquet etc., in an asynchronous manner or it can be used as a blueprint for any asynchronous Flask API.
 
 ## Run Locally
 
