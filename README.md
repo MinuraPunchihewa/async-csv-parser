@@ -39,7 +39,8 @@ Alternatively, combine the two commands above and run,
 docker-compose build && docker-compose up
 ```
 
-Submit a POST request to the `/parse-csv` endpoint along with the `blob_url' and the `delimiter` as form data,
+Submit a POST request to the `/parse-csv` endpoint along with the `blob_url` and the `delimiter` as form data,
 ```
 localhost/parse-csv
 ```
+The `blob_url` should be a Shared Access Signature (SAS) that is generated from your CSV file stored in Azure Blob Storage, while the delimiter/separator is the character that separates the data within the file.
