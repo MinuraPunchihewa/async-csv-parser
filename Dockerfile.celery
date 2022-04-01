@@ -1,0 +1,9 @@
+FROM python:3.7
+
+ADD . .
+
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+RUN pip3 install -U flask-cors
+
+CMD [ "celery", "-A", "worker.celery", "worker", "--loglevel=debug", "--concurrency=10", "-P", "solo", "-n", "%h"]

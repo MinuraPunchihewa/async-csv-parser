@@ -1,0 +1,57 @@
+version: '3.9'
+services:
+  redis:
+    image: 'redis:alpine'
+    container_name: redis
+    ports:
+      - '6379:6379'
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    image: 'web'
+    container_name: web
+    ports:
+      - '80:5000'
+    environment:
+      - FLASK_ENV=dev
+      - FLASK_DEBUG=1
+      - TASK_QUE_SERVER_REDIS=redis
+      - SECRET_KEY=\x02"c\xc9\xf3\x82\xd8\xde\xaf\x9cB\xc6\xd3\x0f\x9a)u\x9a\x85\xb6\xf5\x8f\x80j
+      - DB_HOST=
+      - DB_USER=
+      - DB_PASSWORD=
+      - DB_DRIVER=mysql+mysqlconnector
+      - DB_PORT=3306
+      - DB_NAME=
+    links:
+      - redis
+  c_worker_01:
+    build:
+      context: .
+      dockerfile: Dockerfile.celery
+    image: 'c_worker'
+    container_name: c_worker_01
+    environment:
+      - TASK_QUE_SERVER_REDIS=redis
+      - C_FORCE_ROOT=true
+      - SECRET_KEY=\x02"c\xc9\xf3\x82\xd8\xde\xaf\x9cB\xc6\xd3\x0f\x9a)u\x9a\x85\xb6\xf5\x8f\x80j
+      - DB_HOST=
+      - DB_USER=
+      - DB_PASSWORD=
+      - DB_DRIVER=mysql+mysqlconnector
+      - DB_PORT=3306
+      - DB_NAME=
+    links:
+      - redis
+      - web
+  flower:
+    image: mher/flower
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - FLOWER_PORT=5555
+    container_name: flower
+    links:
+      - redis
+    ports:
+      - '5555:5555'
