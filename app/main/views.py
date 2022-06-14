@@ -7,7 +7,7 @@ import logging
 
 
 @main.route('/parse-csv', methods=['POST'])
-def source_monitoring():
+def parse_csv():
     blob_url = request.form.get('blob_url')
     delimiter = request.form.get('delimiter')
 
